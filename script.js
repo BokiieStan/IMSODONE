@@ -161,205 +161,284 @@ const characterDialogues = {
   }
 };
 
-// Scene Definitions with Extensive Dialogue
+// Scene Definitions with Interactive Dialogue
 const scenes = {
   wake_up: {
     location: 'bedroom',
     time: 7,
-    dialogue: "Good morning, Jamie. It's 7:00 AM and your alarm is ringing. The sun is trying to peek through your curtains, but everything feels heavy today.",
-    choices: [
-      { text: "😊 I feel ready to take on the day!", effect: { anxiety: -5, depression: -3 } },
-      { text: "😐 I'm okay, I guess.", effect: { anxiety: 0, depression: 0 } },
-      { text: "😴 I'm so tired, I want to sleep more.", effect: { sleep: -10, depression: 5 } },
-      { text: "😰 I'm already worried about today.", effect: { anxiety: 10, depression: 3 } }
+    initialDialogue: "Ugh... should I get out of bed today?",
+    characterInteractions: [
+      {
+        character: 'mom',
+        dialogue: "Jamie? Are you up? I made breakfast if you want some.",
+        choices: [
+          { text: "Yeah, I'm coming down.", effect: { anxiety: -2, depression: -1, relationships: { mom: 3 } } },
+          { text: "I'm not hungry.", effect: { anxiety: 2, depression: 3, relationships: { mom: -2 } } },
+          { text: "Just give me a minute.", effect: { anxiety: 0, depression: 0 } }
+        ]
+      },
+      {
+        character: 'bestFriend',
+        dialogue: "Hey Jamie! You awake? We're meeting at the bus stop in 20 minutes.",
+        choices: [
+          { text: "Yeah, I'll be there!", effect: { anxiety: -3, depression: -2, relationships: { bestFriend: 5 } } },
+          { text: "I don't feel like going today.", effect: { anxiety: 5, depression: 8, relationships: { bestFriend: -3 } } },
+          { text: "Maybe... I'll text you.", effect: { anxiety: 2, depression: 3 } }
+        ]
+      }
     ],
-    actions: ['get_up', 'snooze', 'check_phone', 'meditation'],
-    narrative: [
-      "You stare at the ceiling, wondering if you can face another day.",
-      "The weight of yesterday's thoughts still lingers in your mind.",
-      "Your phone buzzes with a message from your best friend Alex.",
-      "You hear your mom moving around in the kitchen downstairs."
-    ]
+    actions: ['get_up', 'snooze', 'check_phone', 'meditation']
   },
   bathroom_morning: {
     location: 'bathroom',
     time: 7.5,
-    dialogue: "You're in the bathroom getting ready. You look in the mirror and see the person you've become. The dark circles under your eyes tell a story of sleepless nights.",
-    choices: [
-      { text: "😊 I look good today!", effect: { anxiety: -3, depression: -2 } },
-      { text: "😐 I look okay.", effect: { anxiety: 0, depression: 0 } },
-      { text: "😔 I look terrible.", effect: { anxiety: 5, depression: 8 } },
-      { text: "😰 I can't even look at myself.", effect: { anxiety: 15, depression: 10 } }
+    initialDialogue: "You look in the mirror and see the dark circles under your eyes.",
+    characterInteractions: [
+      {
+        character: 'mom',
+        dialogue: "Jamie, are you okay? You look really tired.",
+        choices: [
+          { text: "I'm fine, just didn't sleep well.", effect: { anxiety: 0, depression: 0, relationships: { mom: 2 } } },
+          { text: "I'm just tired, that's all.", effect: { anxiety: 1, depression: 1 } },
+          { text: "Leave me alone.", effect: { anxiety: 3, depression: 5, relationships: { mom: -5 } } }
+        ]
+      }
     ],
-    actions: ['brush_teeth', 'shower', 'skip_shower', 'take_medication'],
-    narrative: [
-      "The mirror reflects back someone you barely recognize anymore.",
-      "You splash cold water on your face, trying to wake up your soul.",
-      "Your medication sits on the counter, a daily reminder of your struggles.",
-      "You hear your mom calling from downstairs."
-    ]
+    actions: ['brush_teeth', 'shower', 'skip_shower', 'take_medication']
   },
   kitchen_breakfast: {
     location: 'kitchen',
     time: 8,
-    dialogue: "You're in the kitchen. Your mom left a note saying she's at work early today. The smell of coffee fills the air, but your stomach churns with anxiety.",
-    choices: [
-      { text: "🍳 I'll make myself a proper breakfast.", effect: { anxiety: -2, depression: -3 } },
-      { text: "🥣 I'll just grab some cereal.", effect: { anxiety: 0, depression: 0 } },
-      { text: "☕ I'll just have coffee.", effect: { anxiety: 5, sleep: -5 } },
-      { text: "😔 I'm not hungry.", effect: { anxiety: 3, depression: 5 } }
+    initialDialogue: "Your mom left a note: 'Love you, sweetie. Have a good day.'",
+    characterInteractions: [
+      {
+        character: 'mom',
+        dialogue: "Jamie, I'm worried about you. You seem so distant lately. Can we talk?",
+        choices: [
+          { text: "I'm okay, really. Just stressed about school.", effect: { anxiety: -2, depression: -1, relationships: { mom: 5 } } },
+          { text: "I don't want to talk about it.", effect: { anxiety: 3, depression: 5, relationships: { mom: -3 } } },
+          { text: "Maybe later, Mom.", effect: { anxiety: 1, depression: 2 } }
+        ]
+      },
+      {
+        character: 'dad',
+        dialogue: "Hey sport, how's school going? You seem quiet.",
+        choices: [
+          { text: "It's going okay, Dad.", effect: { anxiety: -1, depression: -1, relationships: { dad: 3 } } },
+          { text: "I don't want to talk about it.", effect: { anxiety: 2, depression: 3, relationships: { dad: -2 } } },
+          { text: "School is fine.", effect: { anxiety: 0, depression: 0 } }
+        ]
+      }
     ],
-    actions: ['make_breakfast', 'skip_breakfast', 'check_phone', 'take_medication'],
-    narrative: [
-      "Your mom's note says 'Love you, sweetie. Have a good day.'",
-      "The kitchen feels empty without her presence.",
-      "Your phone buzzes again - it's Alex asking if you're okay.",
-      "You notice your medication bottle is almost empty."
-    ]
+    actions: ['make_breakfast', 'skip_breakfast', 'check_phone', 'take_medication']
   },
   school_morning: {
     location: 'school',
     time: 8.5,
-    dialogue: "You arrive at school. The hallways are buzzing with students, but you feel invisible among the crowd. You see some classmates in the hallway, and Alex waves at you from across the room.",
-    choices: [
-      { text: "😊 I'm excited to see my friends!", effect: { anxiety: -5, depression: -3 } },
-      { text: "😐 I'm just here to get through the day.", effect: { anxiety: 0, depression: 0 } },
-      { text: "😰 I hope no one talks to me.", effect: { anxiety: 10, depression: 5 } },
-      { text: "😔 I wish I could just go home.", effect: { anxiety: 5, depression: 8 } }
+    initialDialogue: "You arrive at school and see Alex waiting by your locker.",
+    characterInteractions: [
+      {
+        character: 'bestFriend',
+        dialogue: "Jamie! How are you doing? You seem really quiet lately.",
+        choices: [
+          { text: "I'm okay, just tired.", effect: { anxiety: 0, depression: 0, relationships: { bestFriend: 2 } } },
+          { text: "I'm fine, don't worry about it.", effect: { anxiety: 2, depression: 3, relationships: { bestFriend: -1 } } },
+          { text: "Actually, I'm not doing great.", effect: { anxiety: -3, depression: -2, relationships: { bestFriend: 5 } } }
+        ]
+      },
+      {
+        character: 'classmates',
+        dialogue: "Hey Jamie! Want to sit with us at lunch?",
+        choices: [
+          { text: "Sure, that sounds good!", effect: { anxiety: -2, depression: -1, relationships: { classmates: 5 } } },
+          { text: "Maybe another time.", effect: { anxiety: 3, depression: 2, relationships: { classmates: -2 } } },
+          { text: "I'll think about it.", effect: { anxiety: 1, depression: 1 } }
+        ]
+      }
     ],
-    actions: ['talk_to_friends', 'avoid_everyone', 'go_to_class', 'hide_in_bathroom'],
-    narrative: [
-      "Alex approaches you with concern in their eyes.",
-      "The noise of the hallway feels overwhelming.",
-      "You see your reflection in a classroom window.",
-      "Someone bumps into you and apologizes."
-    ]
+    actions: ['talk_to_friends', 'avoid_everyone', 'go_to_class', 'hide_in_bathroom']
   },
   class_math: {
     location: 'school',
     time: 9,
-    dialogue: "Math class is starting. The teacher announces a pop quiz, and your heart starts racing. The numbers on the board blur together as panic sets in.",
-    choices: [
-      { text: "😊 I studied for this, I can do it!", effect: { anxiety: -3, depression: -2 } },
-      { text: "😐 I'll just try my best.", effect: { anxiety: 2, depression: 0 } },
-      { text: "😰 I'm going to fail this.", effect: { anxiety: 15, depression: 8 } },
-      { text: "😔 I can't even think straight.", effect: { anxiety: 20, depression: 10 } }
+    initialDialogue: "The teacher announces a pop quiz. Your heart starts racing.",
+    characterInteractions: [
+      {
+        character: 'teacher',
+        dialogue: "Jamie, are you okay? You look pale. Do you need to step out?",
+        choices: [
+          { text: "I'm fine, I can take the quiz.", effect: { anxiety: -1, depression: -1 } },
+          { text: "Can I have a minute to collect myself?", effect: { anxiety: -2, depression: -1 } },
+          { text: "I need to go to the bathroom.", effect: { anxiety: 5, depression: 3 } }
+        ]
+      },
+      {
+        character: 'bestFriend',
+        dialogue: "Jamie, breathe. You've got this. I'll help you study later.",
+        choices: [
+          { text: "Thanks, Alex. I needed that.", effect: { anxiety: -3, depression: -2, relationships: { bestFriend: 5 } } },
+          { text: "I can't do this.", effect: { anxiety: 10, depression: 8, relationships: { bestFriend: -2 } } },
+          { text: "I'll be okay.", effect: { anxiety: 2, depression: 1 } }
+        ]
+      }
     ],
-    actions: ['take_quiz', 'ask_for_help', 'pretend_sick', 'panic'],
-    narrative: [
-      "The teacher's voice echoes in your ears.",
-      "Your hands are shaking as you pick up your pencil.",
-      "You can hear other students whispering about the quiz.",
-      "The clock on the wall ticks louder than usual."
-    ]
+    actions: ['take_quiz', 'ask_for_help', 'pretend_sick', 'panic']
   },
   lunch_break: {
     location: 'school',
     time: 12,
-    dialogue: "It's lunch time. You see your usual group of friends sitting together, laughing and sharing stories. Alex spots you and waves you over, but you hesitate.",
-    choices: [
-      { text: "😊 I'll join them, they're my friends!", effect: { anxiety: -5, depression: -3 } },
-      { text: "😐 I'll sit with them but stay quiet.", effect: { anxiety: 0, depression: 0 } },
-      { text: "😰 I'll sit alone, I don't want to bother them.", effect: { anxiety: 8, depression: 5 } },
-      { text: "😔 I'll skip lunch entirely.", effect: { anxiety: 3, depression: 8 } }
+    initialDialogue: "Alex waves you over to their lunch table.",
+    characterInteractions: [
+      {
+        character: 'bestFriend',
+        dialogue: "Jamie, come sit with us! We've been missing you.",
+        choices: [
+          { text: "Thanks, I'd like that.", effect: { anxiety: -3, depression: -2, relationships: { bestFriend: 5 } } },
+          { text: "I think I'll sit alone today.", effect: { anxiety: 5, depression: 8, relationships: { bestFriend: -3 } } },
+          { text: "Maybe just for a little bit.", effect: { anxiety: 1, depression: 1 } }
+        ]
+      },
+      {
+        character: 'classmates',
+        dialogue: "Jamie, we're planning a party this weekend. You should come!",
+        choices: [
+          { text: "That sounds fun, I'll think about it.", effect: { anxiety: -1, depression: -1, relationships: { classmates: 3 } } },
+          { text: "I don't think I can make it.", effect: { anxiety: 3, depression: 5, relationships: { classmates: -2 } } },
+          { text: "Maybe, I'll let you know.", effect: { anxiety: 0, depression: 0 } }
+        ]
+      }
     ],
-    actions: ['join_friends', 'sit_alone', 'skip_lunch', 'call_parent'],
-    narrative: [
-      "Alex looks worried when they see you hesitate.",
-      "The cafeteria noise feels like it's closing in on you.",
-      "You can smell the food, but nothing seems appetizing.",
-      "Someone at the next table is talking about a party this weekend."
-    ]
+    actions: ['join_friends', 'sit_alone', 'skip_lunch', 'call_parent']
   },
   afternoon_class: {
     location: 'school',
     time: 13,
-    dialogue: "English class. The teacher asks you to read your essay out loud to the class. Your hands are shaking, and your voice feels trapped in your throat.",
-    choices: [
-      { text: "😊 I practiced this, I can do it!", effect: { anxiety: -2, depression: -1 } },
-      { text: "😐 I'll just read it quickly.", effect: { anxiety: 5, depression: 0 } },
-      { text: "😰 I can't speak in front of everyone.", effect: { anxiety: 20, depression: 8 } },
-      { text: "😔 I want to disappear.", effect: { anxiety: 25, depression: 12 } }
+    initialDialogue: "The English teacher asks you to read your essay out loud.",
+    characterInteractions: [
+      {
+        character: 'teacher',
+        dialogue: "Jamie, would you like to read your essay? It's really well-written.",
+        choices: [
+          { text: "I'll try my best.", effect: { anxiety: 5, depression: 2 } },
+          { text: "Can someone else go first?", effect: { anxiety: 3, depression: 1 } },
+          { text: "I'm not feeling well, can I skip?", effect: { anxiety: 8, depression: 5 } }
+        ]
+      },
+      {
+        character: 'bestFriend',
+        dialogue: "Jamie, your essay is amazing. You've got this!",
+        choices: [
+          { text: "Thanks, Alex. That helps.", effect: { anxiety: -2, depression: -1, relationships: { bestFriend: 3 } } },
+          { text: "I don't think I can do it.", effect: { anxiety: 10, depression: 8, relationships: { bestFriend: -1 } } },
+          { text: "I'll try.", effect: { anxiety: 2, depression: 1 } }
+        ]
+      }
     ],
-    actions: ['read_essay', 'ask_to_skip', 'panic_attack', 'leave_class'],
-    narrative: [
-      "The essay is about hope, but you feel anything but hopeful.",
-      "All eyes are on you as you stand up.",
-      "Your voice cracks as you begin to read.",
-      "You can hear your heart pounding in your ears."
-    ]
+    actions: ['read_essay', 'ask_to_skip', 'panic_attack', 'leave_class']
   },
   school_end: {
     location: 'school',
     time: 15,
-    dialogue: "School is over. You have some free time before you need to go home. Alex approaches you, looking concerned about how quiet you've been all day.",
-    choices: [
-      { text: "😊 I'll hang out with friends!", effect: { anxiety: -3, depression: -2 } },
-      { text: "😐 I'll just go home.", effect: { anxiety: 0, depression: 0 } },
-      { text: "😰 I need to be alone right now.", effect: { anxiety: 5, depression: 3 } },
-      { text: "😔 I don't want to see anyone.", effect: { anxiety: 3, depression: 8 } }
+    initialDialogue: "School is over. Alex approaches you with concern.",
+    characterInteractions: [
+      {
+        character: 'bestFriend',
+        dialogue: "Jamie, you've been really quiet today. Are you okay? You can talk to me.",
+        choices: [
+          { text: "I'm just having a rough day.", effect: { anxiety: -2, depression: -1, relationships: { bestFriend: 5 } } },
+          { text: "I'm fine, don't worry about it.", effect: { anxiety: 2, depression: 3, relationships: { bestFriend: -2 } } },
+          { text: "I don't want to talk about it.", effect: { anxiety: 5, depression: 8, relationships: { bestFriend: -5 } } }
+        ]
+      },
+      {
+        character: 'mom',
+        dialogue: "Jamie, I got a call from school. They're worried about you. Can we talk?",
+        choices: [
+          { text: "I'm okay, Mom. Just stressed.", effect: { anxiety: -1, depression: -1, relationships: { mom: 3 } } },
+          { text: "I don't want to talk about it.", effect: { anxiety: 3, depression: 5, relationships: { mom: -3 } } },
+          { text: "Maybe later.", effect: { anxiety: 1, depression: 2 } }
+        ]
+      }
     ],
-    actions: ['hang_with_friends', 'go_home', 'walk_alone', 'call_parent'],
-    narrative: [
-      "Alex says, 'Jamie, you've been really quiet today. Are you okay?'",
-      "The school is emptying out, and the halls feel lonely.",
-      "You can see the sun setting through the windows.",
-      "Your phone buzzes with a message from your mom."
-    ]
+    actions: ['hang_with_friends', 'go_home', 'walk_alone', 'call_parent']
   },
   home_evening: {
     location: 'bedroom',
     time: 16,
-    dialogue: "You're back home. You have homework to do, but you're feeling exhausted. Your room feels like both a sanctuary and a prison.",
-    choices: [
-      { text: "📚 I'll do my homework first.", effect: { anxiety: -2, depression: -1 } },
-      { text: "😴 I'll take a nap first.", effect: { sleep: 10, anxiety: -3 } },
-      { text: "📱 I'll just scroll on my phone.", effect: { anxiety: 3, depression: 2 } },
-      { text: "😔 I don't feel like doing anything.", effect: { anxiety: 5, depression: 8 } }
+    initialDialogue: "You're back home. Your phone buzzes with messages.",
+    characterInteractions: [
+      {
+        character: 'bestFriend',
+        dialogue: "Jamie, I'm really worried about you. Can we talk? You're not yourself lately.",
+        choices: [
+          { text: "I'm okay, Alex. Just tired.", effect: { anxiety: 0, depression: 0, relationships: { bestFriend: 2 } } },
+          { text: "I don't want to talk about it.", effect: { anxiety: 3, depression: 5, relationships: { bestFriend: -3 } } },
+          { text: "Maybe we can talk tomorrow.", effect: { anxiety: 1, depression: 2 } }
+        ]
+      },
+      {
+        character: 'mom',
+        dialogue: "Jamie, dinner's ready. How was your day?",
+        choices: [
+          { text: "It was okay, Mom.", effect: { anxiety: -1, depression: -1, relationships: { mom: 2 } } },
+          { text: "I'm not hungry.", effect: { anxiety: 3, depression: 5, relationships: { mom: -2 } } },
+          { text: "I'll be down in a minute.", effect: { anxiety: 0, depression: 0 } }
+        ]
+      }
     ],
-    actions: ['do_homework', 'take_nap', 'scroll_phone', 'skip_homework'],
-    narrative: [
-      "Your homework stares at you from your desk.",
-      "Your phone shows several missed calls from Alex.",
-      "The walls of your room feel like they're closing in.",
-      "You can hear your mom cooking dinner downstairs."
-    ]
+    actions: ['do_homework', 'take_nap', 'scroll_phone', 'skip_homework']
   },
   dinner_time: {
     location: 'kitchen',
     time: 18,
-    dialogue: "Your mom is making dinner. She asks how your day was, and you can see the worry in her eyes. She's been trying to reach you all day.",
-    choices: [
-      { text: "😊 It was good, I had fun!", effect: { anxiety: -3, depression: -2 } },
-      { text: "😐 It was okay, nothing special.", effect: { anxiety: 0, depression: 0 } },
-      { text: "😔 It was rough, I'm tired.", effect: { anxiety: 5, depression: 3 } },
-      { text: "😰 I don't want to talk about it.", effect: { anxiety: 8, depression: 5 } }
+    initialDialogue: "Your mom is making dinner. She looks worried.",
+    characterInteractions: [
+      {
+        character: 'mom',
+        dialogue: "Jamie, I'm really worried about you. You seem so distant lately. Can you tell me what's going on?",
+        choices: [
+          { text: "I'm just going through a rough patch, Mom.", effect: { anxiety: -2, depression: -1, relationships: { mom: 5 } } },
+          { text: "I don't want to talk about it.", effect: { anxiety: 5, depression: 8, relationships: { mom: -5 } } },
+          { text: "I'm fine, really.", effect: { anxiety: 2, depression: 3, relationships: { mom: -2 } } }
+        ]
+      },
+      {
+        character: 'dad',
+        dialogue: "Son, your mom and I are worried about you. We want to help.",
+        choices: [
+          { text: "I know, Dad. I'm trying.", effect: { anxiety: -1, depression: -1, relationships: { dad: 3 } } },
+          { text: "I don't need help.", effect: { anxiety: 3, depression: 5, relationships: { dad: -3 } } },
+          { text: "Maybe we can talk later.", effect: { anxiety: 1, depression: 2 } }
+        ]
+      }
     ],
-    actions: ['talk_about_day', 'give_short_answer', 'avoid_conversation', 'go_to_room'],
-    narrative: [
-      "Your mom says, 'Jamie, I'm worried about you. You seem so distant lately.'",
-      "The smell of her cooking fills the kitchen.",
-      "She's been trying to get you to open up for weeks.",
-      "You can see the pain in her eyes when she looks at you."
-    ]
+    actions: ['talk_about_day', 'give_short_answer', 'avoid_conversation', 'go_to_room']
   },
   bedtime: {
     location: 'bedroom',
     time: 21,
-    dialogue: "It's getting late. You should probably go to bed soon, but the thought of another sleepless night fills you with dread. Tomorrow looms ahead like a dark cloud.",
-    choices: [
-      { text: "😊 Tomorrow will be better!", effect: { anxiety: -3, depression: -2 } },
-      { text: "😐 I'll just take it one day at a time.", effect: { anxiety: 0, depression: 0 } },
-      { text: "😰 I'm worried about tomorrow.", effect: { anxiety: 10, depression: 5 } },
-      { text: "😔 I don't want tomorrow to come.", effect: { anxiety: 5, depression: 12 } }
+    initialDialogue: "It's getting late. Your phone shows several missed calls from Alex.",
+    characterInteractions: [
+      {
+        character: 'bestFriend',
+        dialogue: "Jamie, please talk to me. I'm really worried about you. You're not okay.",
+        choices: [
+          { text: "I'm okay, Alex. Just tired.", effect: { anxiety: 0, depression: 0, relationships: { bestFriend: 2 } } },
+          { text: "I don't want to talk about it.", effect: { anxiety: 3, depression: 5, relationships: { bestFriend: -3 } } },
+          { text: "Maybe tomorrow.", effect: { anxiety: 1, depression: 2 } }
+        ]
+      },
+      {
+        character: 'mom',
+        dialogue: "Jamie, I'm here if you need to talk. I love you.",
+        choices: [
+          { text: "I love you too, Mom.", effect: { anxiety: -2, depression: -1, relationships: { mom: 5 } } },
+          { text: "Goodnight, Mom.", effect: { anxiety: 0, depression: 0 } },
+          { text: "Whatever.", effect: { anxiety: 3, depression: 5, relationships: { mom: -5 } } }
+        ]
+      }
     ],
-    actions: ['go_to_sleep', 'stay_up_late', 'take_medication', 'read_book'],
-    narrative: [
-      "Your phone shows a message from Alex: 'Please talk to me, Jamie.'",
-      "The darkness outside your window feels suffocating.",
-      "You can hear your mom and dad talking quietly downstairs.",
-      "Your medication bottle is almost empty again."
-    ]
+    actions: ['go_to_sleep', 'stay_up_late', 'take_medication', 'read_book']
   }
 };
 
@@ -458,7 +537,7 @@ function initGame() {
   loadScene('wake_up');
 }
 
-// Load scene with narrative
+// Load scene with interactive dialogue
 function loadScene(sceneId) {
   const scene = scenes[sceneId];
   if (!scene) return;
@@ -475,13 +554,14 @@ function loadScene(sceneId) {
   // Update scene background
   sceneBackground.className = `scene-background ${scene.location}-scene`;
   
-  // Show narrative first
-  showNarrative(scene.narrative, () => {
-    // Then show dialogue and choices
-    dialogueText.textContent = scene.dialogue;
-    updateChoices(scene.choices);
-    updateActions(scene.actions);
-  });
+  // Show initial dialogue
+  dialogueText.textContent = scene.initialDialogue;
+  
+  // Start character interactions
+  startCharacterInteractions(scene.characterInteractions);
+  
+  // Update actions
+  updateActions(scene.actions);
 }
 
 // Show narrative sequence
@@ -609,7 +689,13 @@ function makeChoice(choice) {
   if (choice.effect) {
     Object.keys(choice.effect).forEach(key => {
       if (gameState[key] !== undefined) {
-        gameState[key] = Math.max(0, Math.min(100, gameState[key] + choice.effect[key]));
+        if (typeof gameState[key] === 'object') {
+          Object.keys(choice.effect[key]).forEach(subKey => {
+            gameState[key][subKey] = Math.max(0, Math.min(100, gameState[key][subKey] + choice.effect[key][subKey]));
+          });
+        } else {
+          gameState[key] = Math.max(0, Math.min(100, gameState[key] + choice.effect[key]));
+        }
       }
     });
   }
@@ -623,13 +709,48 @@ function makeChoice(choice) {
 
   updateStatusBars();
   
-  // Show character reactions
-  showCharacterReactions();
+  // Show character response
+  showCharacterResponse(choice);
   
-  // Progress to next scene
+  // Progress to next scene after delay
   setTimeout(() => {
     progressToNextScene();
-  }, 2000);
+  }, 3000);
+}
+
+// Show character response to choice
+function showCharacterResponse(choice) {
+  const responses = {
+    positive: [
+      "That's good to hear.",
+      "I'm glad you're feeling better.",
+      "That makes me happy.",
+      "I'm here for you."
+    ],
+    neutral: [
+      "Okay, I understand.",
+      "That's fine.",
+      "I'm here if you need me.",
+      "Take your time."
+    ],
+    negative: [
+      "I'm worried about you.",
+      "Are you sure you're okay?",
+      "I want to help.",
+      "Please talk to me."
+    ]
+  };
+  
+  // Determine response type based on choice effect
+  let responseType = 'neutral';
+  if (choice.effect) {
+    const totalEffect = Object.values(choice.effect).reduce((sum, val) => sum + (typeof val === 'object' ? Object.values(val).reduce((a, b) => a + b, 0) : val), 0);
+    if (totalEffect > 0) responseType = 'negative';
+    else if (totalEffect < 0) responseType = 'positive';
+  }
+  
+  const response = responses[responseType][Math.floor(Math.random() * responses[responseType].length)];
+  dialogueText.textContent = response;
 }
 
 // Show character reactions based on choices
@@ -991,6 +1112,35 @@ function showCrisisWarning() {
 // Close crisis warning
 function closeCrisisWarning() {
   document.getElementById("crisisWarning").style.display = "none";
+}
+
+// Start character interactions
+function startCharacterInteractions(interactions) {
+  if (!interactions || interactions.length === 0) {
+    updateChoices([]);
+    return;
+  }
+
+  let currentInteraction = 0;
+  
+  function showNextInteraction() {
+    if (currentInteraction < interactions.length) {
+      const interaction = interactions[currentInteraction];
+      
+      // Show character dialogue
+      setTimeout(() => {
+        dialogueText.textContent = interaction.dialogue;
+        
+        // Show choices
+        updateChoices(interaction.choices);
+      }, 2000);
+      
+      currentInteraction++;
+    }
+  }
+  
+  // Start with first interaction
+  showNextInteraction();
 }
 
 // Event listeners
