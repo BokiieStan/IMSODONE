@@ -14,22 +14,27 @@
   <!-- Start Button -->
   <div id="gameScreen" style="display: none;">
     <h1>Welcome, Jamie</h1>
-    <button id="startBtn">Go to Desk</button>
+    <button id="startBtn">Begin Your Day</button>
   </div>
 
-  <!-- Desk UI -->
-  <div id="deskScreen" style="display: none;">
-    <div class="desk">
-      <h2>Jamie's Desk</h2>
-      <div class="task" onclick="openTask('Homework')">📚 Homework</div>
-      <div class="task" onclick="openTask('Diary')">📔 Diary</div>
-      <div class="task" onclick="openTask('Messages')">📱 Messages</div>
-      <div class="task" onclick="openTask('Browser')">🌐 Internet</div>
-      <div class="task" onclick="openTask('Mood')">😐 Mood Tracker</div>
-      <div class="task" onclick="openTask('Medication')">💊 Medication</div>
-      <div class="task" onclick="openTask('Thoughts')">💭 Thoughts</div>
+  <!-- Main Game Interface -->
+  <div id="mainGame" style="display: none;">
+    <!-- Location Header -->
+    <div class="location-header">
+      <h2 id="currentLocation">Jamie's Bedroom</h2>
+      <div class="time-display">
+        <span id="currentTime">7:00 AM</span>
+        <span id="currentDay">Day 1</span>
+      </div>
     </div>
-    
+
+    <!-- Scene Background -->
+    <div class="scene-container">
+      <div id="sceneBackground" class="scene-background bedroom-scene">
+        <!-- Scene-specific elements will be added here -->
+      </div>
+    </div>
+
     <!-- Mental Health Status Bar -->
     <div class="status-bar">
       <div class="status-item">
@@ -51,6 +56,29 @@
         </div>
       </div>
     </div>
+
+    <!-- Dialogue Box -->
+    <div class="dialogue-container">
+      <div class="dialogue-box">
+        <div class="dialogue-text" id="dialogueText">
+          Good morning, Jamie. It's 7:00 AM and your alarm is ringing. How do you feel about starting your day?
+        </div>
+        <div class="dialogue-choices" id="dialogueChoices">
+          <button class="choice-btn" onclick="makeChoice('energetic')">😊 I feel ready to take on the day!</button>
+          <button class="choice-btn" onclick="makeChoice('neutral')">😐 I'm okay, I guess.</button>
+          <button class="choice-btn" onclick="makeChoice('tired')">😴 I'm so tired, I want to sleep more.</button>
+          <button class="choice-btn" onclick="makeChoice('anxious')">😰 I'm already worried about today.</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-buttons" id="actionButtons" style="display: none;">
+      <button class="action-btn" onclick="performAction('get_up')">Get Up</button>
+      <button class="action-btn" onclick="performAction('snooze')">Snooze Alarm</button>
+      <button class="action-btn" onclick="performAction('check_phone')">Check Phone</button>
+      <button class="action-btn" onclick="performAction('meditation')">Quick Meditation</button>
+    </div>
   </div>
 
   <!-- Intrusive Thoughts Overlay -->
@@ -60,67 +88,23 @@
     </div>
   </div>
 
-  <!-- Mood Tracker Screen -->
-  <div id="moodScreen" class="modal" style="display: none;">
-    <div class="modal-content">
-      <h3>How are you feeling today?</h3>
-      <div class="mood-options">
-        <button class="mood-btn" onclick="setMood('happy')">😊 Happy</button>
-        <button class="mood-btn" onclick="setMood('neutral')">😐 Okay</button>
-        <button class="mood-btn" onclick="setMood('sad')">😢 Sad</button>
-        <button class="mood-btn" onclick="setMood('anxious')">😰 Anxious</button>
-        <button class="mood-btn" onclick="setMood('numb')">😶 Numb</button>
-      </div>
-      <div class="mood-history">
-        <h4>Recent Moods:</h4>
-        <div id="moodHistory"></div>
-      </div>
-      <button onclick="closeModal('moodScreen')">Close</button>
-    </div>
-  </div>
-
-  <!-- Medication Screen -->
-  <div id="medicationScreen" class="modal" style="display: none;">
-    <div class="modal-content">
-      <h3>Medication Reminder</h3>
-      <div class="medication-list">
-        <div class="med-item">
-          <span>💊 Sertraline (50mg)</span>
-          <button onclick="takeMedication('sertraline')" id="sertralineBtn">Take</button>
-        </div>
-        <div class="med-item">
-          <span>💊 Melatonin (5mg)</span>
-          <button onclick="takeMedication('melatonin')" id="melatoninBtn">Take</button>
-        </div>
-      </div>
-      <div class="medication-schedule">
-        <h4>Today's Schedule:</h4>
-        <div id="medSchedule"></div>
-      </div>
-      <button onclick="closeModal('medicationScreen')">Close</button>
-    </div>
-  </div>
-
-  <!-- Thoughts Screen -->
-  <div id="thoughtsScreen" class="modal" style="display: none;">
-    <div class="modal-content">
-      <h3>Your Thoughts</h3>
-      <div class="thoughts-container">
-        <div class="thought-category">
-          <h4>Intrusive Thoughts:</h4>
-          <div id="intrusiveThoughtsList"></div>
-        </div>
-        <div class="thought-category">
-          <h4>Negative Thoughts:</h4>
-          <div id="negativeThoughtsList"></div>
-        </div>
-      </div>
-      <button onclick="closeModal('thoughtsScreen')">Close</button>
-    </div>
-  </div>
-
   <!-- Visual Distortion Overlay -->
   <div id="visualDistortion" class="distortion-overlay" style="display: none;"></div>
+
+  <!-- Crisis Warning -->
+  <div id="crisisWarning" class="crisis-overlay" style="display: none;">
+    <div class="crisis-box">
+      <h3>⚠️ Mental Health Alert</h3>
+      <p>Your symptoms are intensifying. Consider reaching out for help.</p>
+      <p>National Crisis Line: 988</p>
+      <button onclick="closeCrisisWarning()">I understand</button>
+    </div>
+  </div>
+
+  <!-- Scene Transitions -->
+  <div id="sceneTransition" class="scene-transition" style="display: none;">
+    <div class="transition-text" id="transitionText"></div>
+  </div>
 
   <!-- Audio Context for Sound Effects -->
   <audio id="backgroundAmbience" loop>
