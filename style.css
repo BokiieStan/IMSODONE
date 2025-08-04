@@ -1,0 +1,400 @@
+/* Base Styles */
+body {
+  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
+  color: #e0e0e0;
+  font-family: 'Courier New', monospace;
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+  position: relative;
+}
+
+/* Screen Containers */
+#introScreen, #gameScreen, #deskScreen {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  text-align: center;
+  flex-direction: column;
+  position: relative;
+}
+
+/* Intro Text */
+#introText {
+  white-space: pre-wrap;
+  font-size: 18px;
+  max-width: 600px;
+  padding: 40px;
+  background: rgba(0, 0, 0, 0.7);
+  border-radius: 10px;
+  border: 1px solid #333;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+}
+
+/* Buttons */
+button {
+  padding: 12px 24px;
+  font-size: 18px;
+  cursor: pointer;
+  margin-top: 20px;
+  background: linear-gradient(45deg, #2c3e50, #34495e);
+  border: none;
+  border-radius: 8px;
+  color: #ecf0f1;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+button:hover {
+  background: linear-gradient(45deg, #34495e, #2c3e50);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Desk Interface */
+.desk {
+  background: linear-gradient(145deg, #2c3e50, #34495e);
+  border-radius: 15px;
+  padding: 30px;
+  width: 350px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+  border: 1px solid #4a5568;
+  position: relative;
+}
+
+.desk h2 {
+  margin: 0 0 20px 0;
+  color: #ecf0f1;
+  text-align: center;
+  font-size: 24px;
+}
+
+.task {
+  background: linear-gradient(45deg, #4a5568, #2d3748);
+  padding: 15px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  border: 1px solid #718096;
+  font-size: 16px;
+  position: relative;
+  overflow: hidden;
+}
+
+.task:hover {
+  background: linear-gradient(45deg, #718096, #4a5568);
+  transform: translateX(5px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.task::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: -100%;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+  transition: left 0.5s;
+}
+
+.task:hover::before {
+  left: 100%;
+}
+
+/* Status Bar */
+.status-bar {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: rgba(0, 0, 0, 0.8);
+  padding: 15px;
+  border-radius: 10px;
+  border: 1px solid #4a5568;
+  min-width: 200px;
+}
+
+.status-item {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.status-item span {
+  font-size: 12px;
+  color: #a0aec0;
+  min-width: 80px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 8px;
+  background: #2d3748;
+  border-radius: 4px;
+  overflow: hidden;
+  position: relative;
+}
+
+.progress-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 0.5s ease;
+  position: relative;
+}
+
+#anxietyBar {
+  background: linear-gradient(90deg, #f39c12, #e74c3c);
+  width: 30%;
+}
+
+#depressionBar {
+  background: linear-gradient(90deg, #3498db, #2980b9);
+  width: 45%;
+}
+
+#sleepBar {
+  background: linear-gradient(90deg, #9b59b6, #8e44ad);
+  width: 60%;
+}
+
+/* Intrusive Thoughts Overlay */
+.intrusive-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.8);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: fadeIn 0.5s ease;
+}
+
+.thought-bubble {
+  background: linear-gradient(45deg, #e74c3c, #c0392b);
+  padding: 20px 30px;
+  border-radius: 15px;
+  max-width: 400px;
+  text-align: center;
+  box-shadow: 0 10px 30px rgba(231, 76, 60, 0.3);
+  border: 2px solid #c0392b;
+  animation: pulse 2s infinite;
+}
+
+.thought-bubble span {
+  font-size: 18px;
+  color: #fff;
+  font-weight: bold;
+}
+
+/* Modal Styles */
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background: linear-gradient(145deg, #2c3e50, #34495e);
+  padding: 30px;
+  border-radius: 15px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 80vh;
+  overflow-y: auto;
+  border: 1px solid #4a5568;
+  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.5);
+}
+
+.modal-content h3 {
+  margin: 0 0 20px 0;
+  color: #ecf0f1;
+  text-align: center;
+}
+
+/* Mood Options */
+.mood-options {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.mood-btn {
+  padding: 15px;
+  font-size: 16px;
+  border-radius: 10px;
+  background: linear-gradient(45deg, #4a5568, #2d3748);
+  border: 1px solid #718096;
+  transition: all 0.3s ease;
+}
+
+.mood-btn:hover {
+  background: linear-gradient(45deg, #718096, #4a5568);
+  transform: scale(1.05);
+}
+
+/* Medication Styles */
+.medication-list {
+  margin-bottom: 20px;
+}
+
+.med-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  background: rgba(74, 85, 104, 0.3);
+  border-radius: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #718096;
+}
+
+.med-item button {
+  padding: 8px 16px;
+  font-size: 14px;
+  background: linear-gradient(45deg, #27ae60, #2ecc71);
+  border-radius: 6px;
+}
+
+.med-item button:disabled {
+  background: #95a5a6;
+  cursor: not-allowed;
+}
+
+/* Thoughts Container */
+.thoughts-container {
+  display: grid;
+  gap: 20px;
+}
+
+.thought-category {
+  background: rgba(74, 85, 104, 0.3);
+  padding: 15px;
+  border-radius: 8px;
+  border: 1px solid #718096;
+}
+
+.thought-category h4 {
+  margin: 0 0 10px 0;
+  color: #e74c3c;
+}
+
+/* Visual Distortion Overlay */
+.distortion-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 500;
+  background: radial-gradient(circle at 50% 50%, transparent 0%, rgba(231, 76, 60, 0.1) 100%);
+  animation: distortion 3s infinite;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.05); }
+}
+
+@keyframes distortion {
+  0%, 100% { 
+    transform: scale(1) rotate(0deg);
+    filter: hue-rotate(0deg);
+  }
+  25% { 
+    transform: scale(1.02) rotate(0.5deg);
+    filter: hue-rotate(10deg);
+  }
+  50% { 
+    transform: scale(1.01) rotate(-0.3deg);
+    filter: hue-rotate(-5deg);
+  }
+  75% { 
+    transform: scale(1.03) rotate(0.2deg);
+    filter: hue-rotate(15deg);
+  }
+}
+
+/* Progressive Visual Effects */
+.desk.distorted {
+  animation: deskDistortion 2s infinite;
+}
+
+@keyframes deskDistortion {
+  0%, 100% { transform: perspective(1000px) rotateY(0deg); }
+  50% { transform: perspective(1000px) rotateY(2deg); }
+}
+
+/* Mood History */
+.mood-history {
+  margin-top: 20px;
+  padding: 15px;
+  background: rgba(74, 85, 104, 0.3);
+  border-radius: 8px;
+  border: 1px solid #718096;
+}
+
+.mood-history h4 {
+  margin: 0 0 10px 0;
+  color: #ecf0f1;
+}
+
+#moodHistory {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+}
+
+.mood-entry {
+  padding: 5px 10px;
+  border-radius: 15px;
+  font-size: 12px;
+  background: rgba(52, 73, 94, 0.5);
+  border: 1px solid #718096;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .desk {
+    width: 90%;
+    max-width: 350px;
+  }
+  
+  .status-bar {
+    position: static;
+    margin: 20px auto;
+    width: 90%;
+    max-width: 300px;
+  }
+  
+  .modal-content {
+    width: 95%;
+    padding: 20px;
+  }
+  
+  .mood-options {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
