@@ -1,13 +1,30 @@
-/* Base Styles */
+/* Base Styles - Horror Black & White */
 body {
-  background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 50%, #16213e 100%);
-  color: #e0e0e0;
+  background: linear-gradient(135deg, #000000 0%, #1a1a1a 50%, #000000 100%);
+  color: #ffffff;
   font-family: 'Courier New', monospace;
   margin: 0;
   padding: 0;
   overflow: hidden;
   position: relative;
   height: 100vh;
+  filter: contrast(1.2) brightness(0.9) grayscale(1);
+  animation: staticNoise 0.1s infinite;
+}
+
+@keyframes staticNoise {
+  0%, 100% { filter: contrast(1.2) brightness(0.9) grayscale(1); }
+  50% { filter: contrast(1.3) brightness(0.8) grayscale(1) invert(0.05); }
+}
+
+/* Centered Game Container */
+.game-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
 }
 
 /* Screen Containers */
@@ -57,7 +74,8 @@ button:hover {
 #mainGame {
   height: 100vh;
   display: flex;
-  flex-direction: column;
+  align-items: center;
+  justify-content: center;
   position: relative;
 }
 
@@ -71,6 +89,7 @@ button:hover {
   border-bottom: 2px solid #4a5568;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
   z-index: 100;
+  border-radius: 10px 10px 0 0;
 }
 
 .location-header h2 {
@@ -102,6 +121,7 @@ button:hover {
   flex: 1;
   position: relative;
   overflow: hidden;
+  border-radius: 0 0 10px 10px;
 }
 
 .scene-background {
@@ -152,8 +172,8 @@ button:hover {
 
 /* Status Bar */
 .status-bar {
-  position: fixed;
-  top: 80px;
+  position: absolute;
+  top: 20px;
   right: 20px;
   background: rgba(0, 0, 0, 0.8);
   padding: 15px;
@@ -209,62 +229,78 @@ button:hover {
 
 /* Dialogue Container */
 .dialogue-container {
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  background: linear-gradient(145deg, #2c3e50, #34495e);
-  border-top: 2px solid #4a5568;
-  box-shadow: 0 -4px 12px rgba(0, 0, 0, 0.3);
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(145deg, #23272e, #34495e);
+  border: 2px solid #4a5568;
+  box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.35);
   z-index: 300;
+  border-radius: 18px;
+  max-width: 500px;
+  width: 96%;
+  padding: 0 0 8px 0;
 }
 
 .dialogue-box {
-  padding: 20px 30px;
-  max-width: 800px;
-  margin: 0 auto;
+  padding: 24px 24px 16px 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .dialogue-text {
-  font-size: 18px;
-  line-height: 1.6;
-  margin-bottom: 20px;
+  font-size: 19px;
+  line-height: 1.7;
+  margin-bottom: 28px;
   color: #ecf0f1;
   text-align: center;
-  min-height: 60px;
+  min-height: 64px;
   display: flex;
   align-items: center;
   justify-content: center;
+  width: 100%;
 }
 
 .dialogue-choices {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 10px;
-  margin-bottom: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin-bottom: 6px;
+  padding: 14px 0 4px 0;
+  background: rgba(44, 62, 80, 0.55);
+  border-radius: 12px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.10);
+  width: 100%;
 }
 
 .choice-btn {
-  padding: 15px 20px;
-  font-size: 16px;
-  background: linear-gradient(45deg, #4a5568, #2d3748);
-  border: 1px solid #718096;
+  padding: 14px 24px;
+  font-size: 17px;
+  background: linear-gradient(45deg, #4a5568, #23272e);
+  border: 1.5px solid #718096;
   border-radius: 10px;
   color: #ecf0f1;
   transition: all 0.3s ease;
-  text-align: left;
-  line-height: 1.4;
+  text-align: center;
+  line-height: 1.5;
+  width: 92%;
+  max-width: 380px;
+  margin: 0 auto;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.17);
 }
 
 .choice-btn:hover {
   background: linear-gradient(45deg, #718096, #4a5568);
-  transform: translateY(-2px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transform: translateY(-2px) scale(1.03);
+  box-shadow: 0 6px 18px rgba(0,0,0,0.28);
 }
 
 /* Action Buttons */
 .action-buttons {
-  position: fixed;
+  position: absolute;
   bottom: 200px;
   left: 50%;
   transform: translateX(-50%);
@@ -288,6 +324,135 @@ button:hover {
   background: linear-gradient(45deg, #2ecc71, #27ae60);
   transform: translateY(-2px);
   box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Jumpscare Overlay */
+.jumpscare-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #000;
+  z-index: 5000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: jumpscare 0.5s ease;
+}
+
+.jumpscare-content {
+  text-align: center;
+  color: #e74c3c;
+  font-size: 48px;
+  font-weight: bold;
+  text-shadow: 0 0 20px #e74c3c;
+  animation: pulse 0.2s infinite;
+}
+
+@keyframes jumpscare {
+  0% { 
+    transform: scale(0.1);
+    opacity: 0;
+  }
+  50% { 
+    transform: scale(1.2);
+    opacity: 1;
+  }
+  100% { 
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Panic Attack Screen */
+.panic-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(45deg, #e74c3c, #c0392b);
+  z-index: 4000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: panicPulse 0.5s infinite;
+}
+
+.panic-content {
+  background: rgba(0, 0, 0, 0.8);
+  padding: 40px;
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+  max-width: 500px;
+}
+
+.panic-content h2 {
+  font-size: 36px;
+  margin-bottom: 20px;
+  color: #e74c3c;
+}
+
+.panic-options {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+.panic-options button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
+}
+
+@keyframes panicPulse {
+  0%, 100% { 
+    background: linear-gradient(45deg, #e74c3c, #c0392b);
+  }
+  50% { 
+    background: linear-gradient(45deg, #c0392b, #e74c3c);
+  }
+}
+
+/* Warning Overlay */
+.warning-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.9);
+  z-index: 6000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.warning-content {
+  background: linear-gradient(145deg, #e74c3c, #c0392b);
+  padding: 30px;
+  border-radius: 15px;
+  text-align: center;
+  color: white;
+  max-width: 500px;
+  border: 2px solid #c0392b;
+}
+
+.warning-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 20px;
+  justify-content: center;
+}
+
+.warning-buttons button {
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: white;
 }
 
 /* Intrusive Thoughts Overlay */
@@ -446,6 +611,11 @@ button:hover {
 
 /* Responsive Design */
 @media (max-width: 768px) {
+  .game-container {
+    max-width: 100%;
+    margin: 0;
+  }
+  
   .location-header {
     padding: 10px 20px;
   }
@@ -487,4 +657,151 @@ button:hover {
     margin: 10px;
     width: calc(100% - 20px);
   }
+  
+  .jumpscare-content {
+    font-size: 32px;
+  }
+  
+  .panic-content h2 {
+    font-size: 28px;
+  }
+}
+
+/* Choice Buttons */
+.choice-btn {
+  display: block;
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  background: linear-gradient(45deg, #34495e, #2c3e50);
+  border: none;
+  border-radius: 8px;
+  color: #ecf0f1;
+  font-size: 16px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+}
+
+.choice-btn:hover {
+  background: linear-gradient(45deg, #3498db, #2980b9);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.4);
+}
+
+/* Panic Mode Effects */
+.panic-mode {
+  animation: panicShake 0.1s infinite;
+}
+
+@keyframes panicShake {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-2px); }
+  75% { transform: translateX(2px); }
+}
+
+.panic-mode .scene-background {
+  filter: blur(2px) contrast(150%) saturate(200%);
+}
+
+/* Visual Distortion Overlay Enhanced */
+.distortion-overlay {
+  background: repeating-linear-gradient(
+    45deg,
+    rgba(255, 0, 0, 0.1),
+    rgba(255, 0, 0, 0.1) 2px,
+    transparent 2px,
+    transparent 4px
+  );
+  animation: distortionFlicker 0.1s infinite;
+}
+
+@keyframes distortionFlicker {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.7; }
+}
+
+/* Scene Backgrounds */
+.bedroom-scene {
+  background: linear-gradient(135deg, #2c3e50 0%, #34495e 50%, #2c3e50 100%);
+  position: relative;
+}
+
+.bedroom-scene::before {
+  content: '';
+  position: absolute;
+  top: 20%;
+  left: 10%;
+  width: 80px;
+  height: 120px;
+  background: linear-gradient(45deg, #8b4513, #a0522d);
+  border-radius: 10px;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.5);
+}
+
+.bedroom-scene::after {
+  content: '';
+  position: absolute;
+  top: 60%;
+  right: 15%;
+  width: 60px;
+  height: 40px;
+  background: #34495e;
+  border-radius: 5px;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+}
+
+.classroom-scene {
+  background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 50%, #95a5a6 100%);
+  position: relative;
+}
+
+.classroom-scene::before {
+  content: '';
+  position: absolute;
+  top: 10%;
+  left: 20%;
+  width: 60%;
+  height: 40px;
+  background: #2c3e50;
+  border-radius: 5px;
+}
+
+.classroom-scene::after {
+  content: '';
+  position: absolute;
+  bottom: 20%;
+  left: 10%;
+  width: 80%;
+  height: 20px;
+  background: repeating-linear-gradient(
+    90deg,
+    #34495e,
+    #34495e 40px,
+    transparent 40px,
+    transparent 80px
+  );
+}
+
+/* Improved Status Bars */
+.progress-fill {
+  transition: width 0.5s ease, background-color 0.3s ease;
+}
+
+#anxietyBar {
+  background: linear-gradient(90deg, #f39c12, #e74c3c);
+}
+
+#depressionBar {
+  background: linear-gradient(90deg, #3498db, #2c3e50);
+}
+
+#sleepBar {
+  background: linear-gradient(90deg, #2ecc71, #27ae60);
+}
+
+/* High anxiety/depression pulse effect */
+@keyframes statusPulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
 }
